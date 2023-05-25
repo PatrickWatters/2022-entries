@@ -1,2 +1,2 @@
-tree_height = 7 #21
-num_membership_proofs = 21845 #65536
+tree_height = 21
+num_membership_proofs = 65536
