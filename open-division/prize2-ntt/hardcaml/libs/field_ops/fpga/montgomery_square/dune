@@ -1,5 +1,0 @@
-(rule
- (target montgomery_square.v)
- (deps ../../bin/generate/verilog.exe)
- (action
-  (run %{deps} montgomery-mult -squarer -o %{target})))

@@ -1,5 +1,0 @@
-(rule
- (targets point_add.v)
- (deps ../../bin/generate/verilog.exe)
- (action
-  (run %{deps} point-add -o point_add.v)))

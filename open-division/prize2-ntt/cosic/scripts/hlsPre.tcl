@@ -1,1 +1,0 @@
-config_interface -m_axi_max_bitwidth 512

@@ -1,5 +1,0 @@
-(executables
- (names verilog)
- (libraries base core_unix.command_unix hardcaml elliptic_curve_lib)
- (preprocess
-  (pps ppx_jane ppx_deriving_hardcaml)))
