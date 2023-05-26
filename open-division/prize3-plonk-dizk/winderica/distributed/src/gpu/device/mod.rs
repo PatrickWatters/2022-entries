@@ -18,7 +18,7 @@ pub fn build_device_list() -> CudaResult<(Vec<Device>, CudaContexts)> {
         println!("{}", device.name().unwrap());
 
         println!("l {}", 32);
-        rustacuda::context::ContextStack::pop()?;
+        //rustacuda::context::ContextStack::pop()?;
         println!("l {}", 4);
         let memory = device.total_memory()?;
         println!("l {}", 5);
