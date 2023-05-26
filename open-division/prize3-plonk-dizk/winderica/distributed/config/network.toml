@@ -2,8 +2,8 @@
 # They are read by the dispatcher and the workers in order to connect to each other.
 workers = [
     "172.31.8.239:5000",
-    "172.31.6.94:6000",
-    "172.31.7.233:7000",
+    "172.31.6.94:6001",
+    "172.31.7.233:7001",
     "172.31.11.17:8000",
     "172.31.14.97:9000"
 ]
