@@ -9,7 +9,10 @@ unsafe impl Sync for CudaContexts {}
 pub fn build_device_list() -> CudaResult<(Vec<Device>, CudaContexts)> {
     let mut all_devices = Vec::new();
     let mut contexts = Vec::new();
-
+    
+    let num_devices = rustacuda::device::Device::num_devices()?;
+    println!("Number of devices: {}", num_devices);
+    
     rustacuda::init(rustacuda::CudaFlags::empty())?;
     for device in rustacuda::device::Device::devices()? {
         let device = device?;
