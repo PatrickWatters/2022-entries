@@ -9,34 +9,33 @@ unsafe impl Sync for CudaContexts {}
 pub fn build_device_list() -> CudaResult<(Vec<Device>, CudaContexts)> {
     let mut all_devices = Vec::new();
     let mut contexts = Vec::new();
-    
+
     rustacuda::init(rustacuda::CudaFlags::empty())?;
     for device in rustacuda::device::Device::devices()? {
         let device = device?;
-        println!("{}", device.name().unwrap());
-        let owned_context = rustacuda::context::Context::create_and_push(rustacuda::context::ContextFlags::MAP_HOST
+        let owned_context = rustacuda::context::Context::create_and_push(
+            rustacuda::context::ContextFlags::MAP_HOST
                 | rustacuda::context::ContextFlags::SCHED_AUTO,
-            device)?;
-        println!("l {}", 32);
+            device,
+        )?;
         rustacuda::context::ContextStack::pop()?;
-        println!("l {}", 4);
+
         let memory = device.total_memory()?;
-        println!("l {}", 5);
         let compute_units =
             device.get_attribute(rustacuda::device::DeviceAttribute::MultiprocessorCount)? as u32;
-        println!("l {}", 6);
         let compute_capability = (
             device.get_attribute(rustacuda::device::DeviceAttribute::ComputeCapabilityMajor)?
                 as u32,
             device.get_attribute(rustacuda::device::DeviceAttribute::ComputeCapabilityMinor)?
                 as u32,
-               
         );
         let context = owned_context.get_unowned();
+
         contexts.push(owned_context);
+
         all_devices.push(Device { memory, compute_units, compute_capability, context });
     }
-    println!("l {}", 10);
+
     let wrapped_contexts = CudaContexts(contexts);
 
     Ok((all_devices, wrapped_contexts))
