@@ -19,6 +19,7 @@ pub fn build_device_list() -> CudaResult<(Vec<Device>, CudaContexts)> {
     println!("l {}", 3);
         let device = device?;
         println!("l {}", 31);
+        println!("{}", device.name().unwrap());
         let owned_context = rustacuda::context::Context::create_and_push(
             rustacuda::context::ContextFlags::MAP_HOST
                 | rustacuda::context::ContextFlags::SCHED_AUTO,
