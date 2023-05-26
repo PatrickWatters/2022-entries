@@ -12,16 +12,11 @@ pub fn build_device_list() -> CudaResult<(Vec<Device>, CudaContexts)> {
     
     //let num_devices = rustacuda::device::Device::num_devices()?;
     //println!("Number of devices: {}", num_devices);
-    println!("l {}", 1);
     rustacuda::init(rustacuda::CudaFlags::empty())?;
-    println!("l {}", 2);
     for device in rustacuda::device::Device::devices()? {
-    println!("l {}", 3);
         let device = device?;
-        println!("l {}", 31);
         println!("{}", device.name().unwrap());
-        let owned_context = rustacuda::context::Context::create_and_push(
-            rustacuda::context::ContextFlags::MAP_HOST,
+        let owned_context = rustacuda::context::Context::create_and_push(rustacuda::context::ContextFlags::SCHED_AUTO,
             device,
         )?;
         println!("l {}", 32);
