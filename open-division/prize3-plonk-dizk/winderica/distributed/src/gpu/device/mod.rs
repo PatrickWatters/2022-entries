@@ -18,11 +18,13 @@ pub fn build_device_list() -> CudaResult<(Vec<Device>, CudaContexts)> {
     for device in rustacuda::device::Device::devices()? {
     println!("l {}", 3);
         let device = device?;
+        println!("l {}", 31);
         let owned_context = rustacuda::context::Context::create_and_push(
             rustacuda::context::ContextFlags::MAP_HOST
                 | rustacuda::context::ContextFlags::SCHED_AUTO,
             device,
         )?;
+        println!("l {}", 32);
         rustacuda::context::ContextStack::pop()?;
         println!("l {}", 4);
         let memory = device.total_memory()?;
