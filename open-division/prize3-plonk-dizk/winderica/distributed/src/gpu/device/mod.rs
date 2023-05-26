@@ -16,9 +16,7 @@ pub fn build_device_list() -> CudaResult<(Vec<Device>, CudaContexts)> {
     for device in rustacuda::device::Device::devices()? {
         let device = device?;
         println!("{}", device.name().unwrap());
-        let owned_context = rustacuda::context::Context::create_and_push(rustacuda::context::ContextFlags::MAP_HOST
-                | rustacuda::context::ContextFlags::SCHED_AUTO,
-            device)?;
+
         println!("l {}", 32);
         rustacuda::context::ContextStack::pop()?;
         println!("l {}", 4);
@@ -35,6 +33,9 @@ pub fn build_device_list() -> CudaResult<(Vec<Device>, CudaContexts)> {
                
         );
         println!("l {}", 7);
+        let owned_context = rustacuda::context::Context::create_and_push(rustacuda::context::ContextFlags::MAP_HOST
+            | rustacuda::context::ContextFlags::SCHED_AUTO,
+        device)?;
         let context = owned_context.get_unowned();
         println!("l {}", 8);
         contexts.push(owned_context);
