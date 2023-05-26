@@ -10,15 +10,15 @@ pub fn build_device_list() -> CudaResult<(Vec<Device>, CudaContexts)> {
     let mut all_devices = Vec::new();
     let mut contexts = Vec::new();
     
-    //let num_devices = rustacuda::device::Device::num_devices()?;
-    //println!("Number of devices: {}", num_devices);
     rustacuda::init(rustacuda::CudaFlags::empty())?;
     for device in rustacuda::device::Device::devices()? {
         let device = device?;
         println!("{}", device.name().unwrap());
-
+        let owned_context = rustacuda::context::Context::create_and_push(rustacuda::context::ContextFlags::MAP_HOST
+                | rustacuda::context::ContextFlags::SCHED_AUTO,
+            device)?;
         println!("l {}", 32);
-        //rustacuda::context::ContextStack::pop()?;
+        rustacuda::context::ContextStack::pop()?;
         println!("l {}", 4);
         let memory = device.total_memory()?;
         println!("l {}", 5);
@@ -32,14 +32,8 @@ pub fn build_device_list() -> CudaResult<(Vec<Device>, CudaContexts)> {
                 as u32,
                
         );
-        println!("l {}", 7);
-        let owned_context = rustacuda::context::Context::create_and_push(rustacuda::context::ContextFlags::MAP_HOST
-            | rustacuda::context::ContextFlags::SCHED_AUTO,
-        device)?;
         let context = owned_context.get_unowned();
-        println!("l {}", 8);
         contexts.push(owned_context);
-        println!("l {}", 9);
         all_devices.push(Device { memory, compute_units, compute_capability, context });
     }
     println!("l {}", 10);
