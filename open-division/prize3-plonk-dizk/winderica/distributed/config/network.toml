@@ -1,7 +1,7 @@
 # The socket addresses that the workers listen on.
 # They are read by the dispatcher and the workers in order to connect to each other.
 workers = [
-    "172.31.9.201:5000",
+    "172.31.5.248:5000",
     "172.31.7.41:6000",
     "172.31.1.136:7000",
     "172.31.2.194:8000",
