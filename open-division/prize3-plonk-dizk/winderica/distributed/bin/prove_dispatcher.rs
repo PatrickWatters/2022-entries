@@ -35,7 +35,7 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error>> {
     */
     let now = Instant::now();
     let proof = Plonk::prove_async(&mut workers, &public_inputs, &vk).await.unwrap();
-    println!("prove {}: {:?}", i, now.elapsed());
+    println!("prove {}: {:?}", 1, now.elapsed());
     assert!(PlonkKzgSnark::verify::<StandardTranscript>(&vk, &public_inputs, &proof).is_ok());
     Ok(())
 }
