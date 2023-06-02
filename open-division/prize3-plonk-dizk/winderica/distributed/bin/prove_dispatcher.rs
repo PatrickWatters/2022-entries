@@ -25,11 +25,17 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error>> {
         stream
     }))
     .await;
+    /* 
     for i in 0..10 {
         let now = Instant::now();
         let proof = Plonk::prove_async(&mut workers, &public_inputs, &vk).await.unwrap();
         println!("prove {}: {:?}", i, now.elapsed());
         assert!(PlonkKzgSnark::verify::<StandardTranscript>(&vk, &public_inputs, &proof).is_ok());
     }
+    */
+    let now = Instant::now();
+    let proof = Plonk::prove_async(&mut workers, &public_inputs, &vk).await.unwrap();
+    println!("prove {}: {:?}", i, now.elapsed());
+    assert!(PlonkKzgSnark::verify::<StandardTranscript>(&vk, &public_inputs, &proof).is_ok());
     Ok(())
 }
